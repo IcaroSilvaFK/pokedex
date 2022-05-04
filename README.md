@@ -24,3 +24,7 @@
 </table>
 
 ### Imagens do Projeto
+![Screenshot_27](https://user-images.githubusercontent.com/86238635/166747822-525d24a1-1462-4fb3-b894-02cf131d677b.png)
+![Screenshot_30](https://user-images.githubusercontent.com/86238635/166747836-106a574b-289a-4858-9947-88db80622e2a.png)
+![Screenshot_28](https://user-images.githubusercontent.com/86238635/166747848-d1f6682b-8881-4a24-a144-f4bf8f4df73f.png)
+![Screenshot_29](https://user-images.githubusercontent.com/86238635/166747854-9e1c2662-7ac7-4feb-83fc-bb70e3834a90.png)
