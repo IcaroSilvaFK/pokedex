@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: 100vh;
 
-  padding: 40px;
-
-  overflow: hidden;
+  padding: 20px;
+  .PokéAPI {
+    margin-left: 30px;
+  }
 `;
 
 export const ContainerPoke = styled.div`
@@ -15,10 +16,16 @@ export const ContainerPoke = styled.div`
   justify-content: center;
   gap: 30px;
 
-  margin-top: -190px;
+  margin-top: -40px;
 
   h1 {
     text-align: center;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    font-weight: 400;
   }
   strong {
     font-size: 1.1rem;
@@ -61,4 +68,20 @@ export const HorizontalCard = styled.div`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
+
+  .img--hoverEffect {
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+
+    align-items: center;
+
+    .img--hoverEffect {
+      display: none;
+    }
+  }
 `;

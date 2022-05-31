@@ -1,3 +1,4 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RoutesApplication } from "./routes";
@@ -8,7 +9,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <GlobalStyled />
-    <RoutesApplication />
+    <ChakraProvider>
+      <GlobalStyled />
+      <RoutesApplication />
+    </ChakraProvider>
   </React.StrictMode>
 );

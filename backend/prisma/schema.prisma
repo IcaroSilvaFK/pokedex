@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Poke{
+  id String @id @default(uuid())
+  name String
+  weight Int
+  abilities Ability[]
+  sprites Sprite?
+  movies Movies[] 
+  stats Stats[]
+  @@map("pokes")
+}
+
+model Ability{
+  id String @id @default(uuid())
+  name String
+  poke Poke @relation(fields: [poke_id],references: [id])
+  poke_id String
+
+  @@map("ability")
+}
+
+model Sprite{
+  id String @id @default(uuid())
+  back_default String
+  back_shiny String
+  front_default String 
+  front_shiny String
+  front_default_svg String
+  poke_id String
+  poke Poke @relation(fields: [poke_id], references: [id])
+
+  @@map("sprites")
+}
+
+model Movies{
+  id String @id @default(uuid())
+  name String
+  url String
+  poke_id String
+  poke Poke @relation(fields: [poke_id],references: [id])
+  @@map("movies")
+}
+
+model Stats {
+  id String @id @default(uuid())
+  base_stat Int 
+  name String 
+  poke_id String
+  poke Poke @relation(fields: [poke_id], references: [id])
+    @@map("stats")
+}

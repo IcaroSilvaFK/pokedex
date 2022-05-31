@@ -4,7 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import {
-  Container,
+  Container as ContainerStyled,
   Card,
   Powers,
   ContainerStatus,
@@ -12,72 +12,96 @@ import {
   ContainerCards,
   ButtonMore,
 } from "./styles";
+import { Box, Container, Spinner } from "@chakra-ui/react";
 
-interface IPokePorps {
-  id: number;
+interface IPokesApi {
+  id: string;
+  abilities: [
+    {
+      id: string;
+      name: string;
+    }
+  ];
   name: string;
   sprites: {
-    other: {
-      dream_world: {
-        front_default: string;
-      };
-    };
+    front_default_svg: string;
   };
   stats: [
     {
+      id: string;
+      name: string;
       base_stat: number;
     }
   ];
+  weight: number;
 }
 
 export function Home() {
   const navigate = useNavigate();
-  const [pokes, setPokes] = useState<IPokePorps[]>([]);
-  const [quantit, setQuantit] = useState(20);
   const [loading, setLoading] = useState(true);
-  const id = useId();
+  const [pokes, setPokes] = useState<IPokesApi[]>([]);
+  const [quantity, setQuantity] = useState(100);
+
   const propriertsPowerPoke = ["HP", "ATAQUE", "DEFESA"];
 
   useEffect(() => {
     (async () => {
-      let seila = [];
-      for (let i = 1; i < quantit; i++) {
-        const { data } = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${i}`
-        );
-        seila.push(data);
-      }
-      setPokes(seila);
+      const { data } = await axios.get("http://localhost:8080/pokes", {
+        params: {
+          quantity,
+        },
+      });
+      console.log(data);
+      setPokes(data);
       setLoading(false);
     })();
-  }, [quantit]);
+  }, [quantity]);
 
   if (loading) {
-    return <h1>Loading</h1>;
+    return (
+      <Container
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        flexDirection='column'
+      >
+        <Box w='100%' padding='20px'>
+          <img
+            alt='PokéAPI'
+            src='https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png'
+            width='250px'
+          />
+        </Box>
+        <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+          marginTop='50px'
+        />
+      </Container>
+    );
   }
   return (
-    <Container>
-      <ButtonMore onClick={() => setQuantit((prev) => prev + 20)}>
-        <AiOutlinePlus size={20} />
-      </ButtonMore>
+    <ContainerStyled>
       <img
         alt='PokéAPI'
         src='https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png'
       />
+      <ButtonMore onClick={() => setQuantity((prev) => prev + 100)}>
+        <AiOutlinePlus />
+      </ButtonMore>
       <ContainerCards>
-        {pokes?.map((element) => (
-          <Card key={element.id}>
-            <img
-              src={element.sprites.other.dream_world.front_default}
-              alt=''
-              width={50}
-            />
-            <strong>{element.name}</strong>
+        {pokes?.map((poke) => (
+          <Card key={poke.id}>
+            <img src={poke.sprites.front_default_svg} alt='' width={50} />
+            <strong>{poke.name}</strong>
             <ContainerStatus>
-              {element.stats.map((element, index) => {
+              {poke.stats.map((element, index) => {
                 return (
                   index < 3 && (
-                    <ListStatus key={element.base_stat}>
+                    <ListStatus key={element.id}>
                       <p>{propriertsPowerPoke[index]}</p>
                       <Powers force={element.base_stat} />
                     </ListStatus>
@@ -87,7 +111,7 @@ export function Home() {
             </ContainerStatus>
             <button
               onClick={() => {
-                navigate(`/poke/${element.id}`);
+                navigate(`/poke/${poke.id}`);
               }}
             >
               Mais Informações
@@ -95,6 +119,6 @@ export function Home() {
           </Card>
         ))}
       </ContainerCards>
-    </Container>
+    </ContainerStyled>
   );
 }

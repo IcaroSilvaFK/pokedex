@@ -16,6 +16,12 @@ export const Container = styled.div`
   }
 
   padding: 20px;
+
+  @media (max-width: 500px) {
+    img {
+      margin: auto;
+    }
+  }
 `;
 
 export const ContainerCards = styled.div`
@@ -44,6 +50,7 @@ export const Card = styled.div`
   img {
     width: 80px;
     flex-grow: 1;
+    margin: auto;
   }
   strong {
     font-size: 1.2rem;
