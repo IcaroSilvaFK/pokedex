@@ -22,7 +22,6 @@ export class PokesController {
     const pokesRepository = new PokesRepository();
     const pokesService = new PokesService(pokesRepository);
     const { id } = request.query;
-    console.log(id);
     try {
       const poke = await pokesService.getOne(`${id}`);
 
