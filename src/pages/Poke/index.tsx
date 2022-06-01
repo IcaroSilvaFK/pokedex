@@ -102,7 +102,7 @@ export function Poke() {
       />
       <ContainerPoke>
         <Column>
-          <img src={image} alt='' width={360} />
+          <img src={image} alt={poke?.name} width={360} />
           <Heading textAlign='center'>{poke?.name}</Heading>
           <strong>Habilidades :</strong>
           <ul>
